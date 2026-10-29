@@ -1,0 +1,26 @@
+-- 1. Retrieve products whose list price is higher than the average unit price
+
+SELECT 
+    ProductID,
+    Name,
+    ListPrice
+FROM SalesLT.Product
+WHERE ListPrice > (
+    SELECT AVG(UnitPrice) 
+    FROM SalesLT.SalesOrderDetail
+)
+ORDER BY ProductID;
+
+--2. Retrieve products with a list price of 100 or more that have been sold for less than 100
+SELECT
+    ProductID,
+    Name,
+    ListPrice
+FROM SalesLT.Product
+WHERE ListPrice >= 100
+  AND ProductID IN (
+      SELECT ProductID
+      FROM SalesLT.SalesOrderDetail
+      WHERE UnitPrice < 100
+  )
+ORDER BY ProductID;

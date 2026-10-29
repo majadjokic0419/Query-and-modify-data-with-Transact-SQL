@@ -1,0 +1,35 @@
+--1. Retrieve total sales by product
+
+SELECT 
+    p.Name,
+    SUM(sod.OrderQty) AS TotalSales
+FROM SalesLT.Product AS p
+JOIN SalesLT.SalesOrderDetail AS sod
+    ON p.ProductID = sod.ProductID
+GROUP BY p.Name
+ORDER BY TotalSales DESC;
+
+--2. Filter the product sales list to include only products that cost over 1,000
+
+SELECT 
+    p.Name,
+    SUM(sod.OrderQty) AS TotalSales
+FROM SalesLT.Product AS p
+JOIN SalesLT.SalesOrderDetail AS sod
+    ON p.ProductID = sod.ProductID
+WHERE p.ListPrice > 1000
+GROUP BY p.Name
+ORDER BY TotalSales DESC;
+
+--3. Filter the product sales groups to include only products for which over 20 have been sold
+
+SELECT 
+    p.Name,
+    SUM(sod.OrderQty) AS TotalSales
+FROM SalesLT.Product AS p
+JOIN SalesLT.SalesOrderDetail AS sod
+    ON p.ProductID = sod.ProductID
+WHERE p.ListPrice > 1000
+GROUP BY p.Name
+HAVING SUM(sod.OrderQty) > 20
+ORDER BY TotalSales DESC;

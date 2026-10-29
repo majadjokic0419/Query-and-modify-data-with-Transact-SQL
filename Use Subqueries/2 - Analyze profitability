@@ -1,0 +1,34 @@
+-- 1. Retrieve the cost, list price, and average selling price for each product
+
+SELECT 
+    p.ProductID,
+    p.Name,
+    p.StandardCost,
+    p.ListPrice,
+    (
+        SELECT AVG(sod.UnitPrice)
+        FROM SalesLT.SalesOrderDetail AS sod
+        WHERE sod.ProductID = p.ProductID
+    ) AS AvgSellingPrice
+FROM SalesLT.Product AS p
+ORDER BY p.ProductID;
+
+--2. Retrieve products that have an average selling price that is lower than the cost
+
+SELECT 
+    p.ProductID,
+    p.Name,
+    p.StandardCost,
+    p.ListPrice,
+    (
+        SELECT AVG(sod.UnitPrice)
+        FROM SalesLT.SalesOrderDetail AS sod
+        WHERE sod.ProductID = p.ProductID
+    ) AS AvgSellingPrice
+FROM SalesLT.Product AS p
+WHERE p.StandardCost > (
+    SELECT AVG(sod.UnitPrice)
+    FROM SalesLT.SalesOrderDetail AS sod
+    WHERE sod.ProductID = p.ProductID
+)
+ORDER BY p.ProductID;

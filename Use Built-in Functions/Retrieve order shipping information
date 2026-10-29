@@ -1,0 +1,25 @@
+--1. Retrieve the order ID and freight cost of each order
+
+SELECT 
+    SalesOrderID,
+    ROUND(Freight, 2) AS FreightCost
+FROM SalesLT.SalesOrderHeader;
+
+--2. Add the shipping method
+
+SELECT 
+    SalesOrderID,
+    ROUND(Freight, 2) AS FreightCost,
+    LOWER(ShipMethod) AS ShippingMethod
+FROM SalesLT.SalesOrderHeader;
+
+--3. Add shipping date details
+
+SELECT 
+    SalesOrderID,
+    ROUND(Freight, 2) AS FreightCost,
+    LOWER(ShipMethod) AS ShippingMethod,
+    YEAR(ShipDate) AS ShipYear,
+    DATENAME(month, ShipDate) AS ShipMonth,
+    DAY(ShipDate) AS ShipDay
+FROM SalesLT.SalesOrderHeader;
